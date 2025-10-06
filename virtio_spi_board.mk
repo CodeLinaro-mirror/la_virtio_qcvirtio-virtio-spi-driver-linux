@@ -1,0 +1,7 @@
+#SPDX-License-Identifier: GPL-2.0-only
+
+# Build virtio-spi kernel driver
+
+BOARD_VENDOR_KERNEL_MODULES += $(KERNEL_MODULES_OUT)/spi-virtio.ko
+# BOARD_VENDOR_RAMDISK_KERNEL_MODULES += $(KERNEL_MODULES_OUT)/spi-virtio.ko
+# BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD += $(KERNEL_MODULES_OUT)/spi-virtio.ko

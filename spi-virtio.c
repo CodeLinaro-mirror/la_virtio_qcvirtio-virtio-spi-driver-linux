@@ -6,6 +6,7 @@
  * SPI bus driver for the Virtio SPI controller
  */
 
+#include "include/uapi/linux/virtio_spi.h"
 #include <linux/completion.h>
 #include <linux/interrupt.h>
 #include <linux/io.h>
@@ -17,7 +18,6 @@
 #include <linux/version.h> /* Only for module */
 #include <linux/virtio.h>
 #include <linux/virtio_ring.h>
-#include <linux/virtio_spi.h>
 
 #ifndef VIRTIO_ID_SPI
 #define VIRTIO_ID_SPI 45
@@ -39,6 +39,7 @@ static inline u8 spi_get_chipselect(const struct spi_device *spi, u8 idx)
 }
 #endif
 
+// clang-format off
 struct virtio_spi_req {
 	struct completion completion;
 	struct spi_transfer_head transfer_head	____cacheline_aligned;
@@ -46,6 +47,7 @@ struct virtio_spi_req {
 	uint8_t *rx_buf				____cacheline_aligned;
 	struct spi_transfer_result result	____cacheline_aligned;
 };
+// clang-format on
 
 struct virtio_spi_priv {
 	/* Virtio SPI message */
@@ -304,6 +306,7 @@ static void virtio_spi_read_config(struct virtio_device *vdev)
 	u8 tx_nbits_supported;
 	u8 rx_nbits_supported;
 
+	// clang-format off
 	cs_max_number = virtio_cread8(vdev, offsetof(struct virtio_spi_config,
 						     cs_max_number));
 	ctrl->num_chipselect = cs_max_number;
@@ -352,6 +355,7 @@ static void virtio_spi_read_config(struct virtio_device *vdev)
 	priv->max_freq_hz =
 		virtio_cread32(vdev, offsetof(struct virtio_spi_config,
 					      max_freq_hz));
+	// clang-format on
 }
 
 static int virtio_spi_find_vqs(struct virtio_spi_priv *priv)
