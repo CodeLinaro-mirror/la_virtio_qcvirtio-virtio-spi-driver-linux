@@ -2,6 +2,12 @@
 
 LOCAL_PATH := $(call my-dir)
 
+ifeq ($(ENABLE_VENDOR_CUTTLEFISH), true)
+
+LOCAL_MODULE_DDK_BUILD := true
+LOCAL_MODULE_DDK_ALLOW_UNSAFE_HEADERS := true
+LOCAL_MODULE_KO_DIRS := spi-virtio.ko
+
 KBUILD_OPTIONS := MODNAME=spi-virtio
 KBUILD_OPTIONS += BOARD_PLATFORM=$(TARGET_BOARD_PLATFORM)
 
@@ -22,3 +28,5 @@ LOCAL_MODULE_PATH         := $(KERNEL_MODULES_OUT)
 
 include $(DLKM_DIR)/Build_external_kernelmodule.mk
 
+
+endif # ENABLE_VENDOR_CUTTLEFISH
